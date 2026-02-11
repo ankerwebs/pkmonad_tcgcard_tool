@@ -3,9 +3,9 @@
 
 class AgentSystem {
     constructor() {
-        this.psaToken = 'C2MNdaW2IO9Xlbm1MXC0Q_ARCaVfQbkldZRsMYd6oWP8ZACXog6jzv6X7QrgyWwYRgNmU3fn5tKp99zf8lRHiugZiEsjnOl4t_EpApf7JixN7HXvzwkGUZ8jxfpYNqszBBUZsOHS0mRatl3h-KxNvyd0qHV-QuDyryiiEFMq50tdWIiqrLEdil0xGi478LrtrLfnB9kP10jBpk6_dWV_UjI6jRF9_gRwQy3meG9Bitgvpghg-1DImavKxNW_i6ojZYrCIY5DK3w3uMkniqr8DNunZxZu-2c25o7dymeXq8DqU_Wh';
+        this.psaToken = 'your_access_token_here';
         this.psaApiUrl = 'https://api.psacard.com/publicapi';
-        this.priceChartingCsvUrl = 'https://www.pricecharting.com/price-guide/download-custom?t=e8b39b271ff62d9572736d3a6e8e8050edb53704&category=pokemon-cards';
+        this.priceChartingCsvUrl = 'https://www.pricecharting.com/price-guide/download-custom?t=your_access_token_here&category=pokemon-cards';
 
         this.currentData = {
             sylveon: null,
@@ -132,7 +132,7 @@ class AgentSystem {
         try {
             // Build search query: Set + Card Name + Number
             const searchQuery = `${cardInfo.series} ${cardInfo.cardName} ${cardInfo.cardNumber}`.replace(/-/g, ' ').trim();
-            const apiUrl = `https://www.pricecharting.com/api/products?q=${encodeURIComponent(searchQuery)}&t=e8b39b271ff62d9572736d3a6e8e8050edb53704`;
+            const apiUrl = `https://www.pricecharting.com/api/products?q=${encodeURIComponent(searchQuery)}&t=your_access_token_here`;
 
             console.log('[Charizard] API Search:');
             console.log(`  Query: "${searchQuery}"`);
