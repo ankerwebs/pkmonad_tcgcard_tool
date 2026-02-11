@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéMeme - Real-time Meme Coin Dashboard - PKMONAD</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-purple': '#7C3AED',
+                        'secondary-purple': '#A855F7',
+                        'dark-purple': '#5B21B6',
+                        'bg-dark': '#0A0A0F',
+                        'bg-card': 'rgba(20, 20, 30, 0.6)',
+                        'accent-green': '#10B981',
+                        'accent-red': '#EF4444',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Animations */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-enter {
+            animation: fade-in-up 0.5s ease-out forwards;
+        }
+
+        .flip-card-move {
+            transition: transform 0.5s ease;
+        }
+
+        /* Glass effect override for Tailwind */
+        .glass-panel {
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-[#0A0A0F] text-white font-sans min-h-screen flex flex-col">
+
+    <!-- Navigation (Kept consistent with other pages) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="PKMONAD Logo">
+                <span>PKMONAD</span>
+            </a>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        Pokédex <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="pokedex.html" class="dropdown-item">Pokédex</a>
+                        <a href="tcg-search.html" class="dropdown-item">Poké TCG</a>
+                        <a href="pokememe.html" class="dropdown-item">PokéMeme</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="train.html" class="nav-link">Train</a>
+                </li>
+                <li class="nav-item">
+                    <a href="battle.html" class="nav-link">Battle</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        $PKMON <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="https://nad.fun/tokens/0x39D691612Ef8B4B884b0aA058f41C93d6B527777" target="_blank"
+                            class="dropdown-item">How to buy</a>
+                        <a href="utility.html" class="dropdown-item">Utility</a>
+                        <a href="#" class="dropdown-item" style="opacity: 0.6; cursor: not-allowed;">
+                            Coming soon <span style="font-size: 0.6rem; vertical-align: middle;">⏳</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        Poké Center <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="https://x.com/pkmonad" target="_blank" class="dropdown-item">X (Twitter)</a>
+                        <a href="https://t.me/pkmonad" target="_blank" class="dropdown-item">Telegram</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="agent-dashboard.html" class="nav-link btn-start">START</a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn-wallet" id="connectWalletBtn">
+                        <i class="fas fa-wallet"></i> Connect Wallet
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- Header -->
+        <div class="text-center mb-12 animate-fade-in">
+            <h1
+                class="text-4xl md:text-5xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-purple-400 font-heading">
+                PokéMeme Live Dashboard
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Real-time market data for the hottest Pokémon meme coins.
+                <span class="text-primary-purple font-semibold">Auto-updates every 15s</span>
+            </p>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div id="coin-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative transition-all duration-500">
+            <!-- Cards will be injected here by JS -->
+
+            <!-- Loading Skeletons -->
+            <div class="glass-panel rounded-2xl p-6 h-80 animate-pulse flex flex-col justify-between">
+                <div class="h-8 bg-gray-700 rounded w-1/2 mb-4"></div>
+                <div class="space-y-3">
+                    <div class="h-4 bg-gray-700 rounded w-full"></div>
+                    <div class="h-4 bg-gray-700 rounded w-3/4"></div>
+                </div>
+                <div class="h-20 bg-gray-700 rounded mt-6"></div>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 h-80 animate-pulse flex flex-col justify-between hidden md:flex">
+                <div class="h-8 bg-gray-700 rounded w-1/2 mb-4"></div>
+                <div class="space-y-3">
+                    <div class="h-4 bg-gray-700 rounded w-full"></div>
+                    <div class="h-4 bg-gray-700 rounded w-3/4"></div>
+                </div>
+                <div class="h-20 bg-gray-700 rounded mt-6"></div>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 h-80 animate-pulse flex flex-col justify-between hidden lg:flex">
+                <div class="h-8 bg-gray-700 rounded w-1/2 mb-4"></div>
+                <div class="space-y-3">
+                    <div class="h-4 bg-gray-700 rounded w-full"></div>
+                    <div class="h-4 bg-gray-700 rounded w-3/4"></div>
+                </div>
+                <div class="h-20 bg-gray-700 rounded mt-6"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            refreshInterval: 15000, // 15 seconds
+            coins: [
+                'A9E2AopuG56LWYiXsvGLLTcLjUjQ539PY6k5Fhfepump', // Solana 1
+                'CARDSccUMFKoPRZxt5vt3ksUbxEFEcnZ3H2pd3dKxYjp', // Solana 2
+                '0xE09fB60E8D6e7E1CEbBE821bD5c3FC67a40F86bF'   // Ethereum
+            ]
+        };
+
+        const container = document.getElementById('coin-grid');
+
+        // Helper: Format Currency
+        const formatCurrency = (value) => {
+            if (!value) return '$0.00';
+            if (value < 0.0001) return '$' + parseFloat(value).toExponential(2);
+            if (value < 1) return '$' + parseFloat(value).toFixed(8);
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+        };
+
+        // Helper: Format Number (M/K)
+        const formatNumber = (num) => {
+            if (!num) return '0';
+            if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(2) + 'K';
+            return num.toLocaleString();
+        };
+
+        // Main Fetch Function
+        async function fetchMarketData() {
+            try {
+                // Fetch data for all tokens in one request or separate requests? DexScreener supports comma-separated?
+                // DexScreener API: https://api.dexscreener.com/latest/dex/tokens/{tokenAddreses} 
+                // It supports multiple addresses comma separated.
+                const addresses = CONFIG.coins.join(',');
+                const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addresses}`);
+                const data = await response.json();
+
+                if (!data.pairs || data.pairs.length === 0) {
+                    console.error("No pair data found");
+                    return;
+                }
+
+                // Process Data:
+                // 1. Group pairs by baseToken.address to handle multiple pairs for same token
+                // 2. Select the "best" pair (highest liquidity) for each unique token address in our list
+                const bestPairs = [];
+                const processedTokens = new Set();
+
+                // Sort raw pairs by liquidity USD desc to prioritize main pools
+                const sortedRawPairs = data.pairs.sort((a, b) => (b.liquidity?.usd || 0) - (a.liquidity?.usd || 0));
+
+                for (const pair of sortedRawPairs) {
+                    // Check if this pair's base token is in our target list
+                    const tokenAddress = pair.baseToken.address;
+                    // Note: API might return slightly different casing, normalize to lowercase
+                    const targetSet = new Set(CONFIG.coins.map(c => c.toLowerCase()));
+
+                    if (targetSet.has(tokenAddress.toLowerCase()) && !processedTokens.has(tokenAddress.toLowerCase())) {
+                        bestPairs.push(pair);
+                        processedTokens.add(tokenAddress.toLowerCase());
+                    }
+                }
+
+                // Sorting Logic: Sort by 24h Price Change Descending
+                bestPairs.sort((a, b) => (b.priceChange?.h24 || 0) - (a.priceChange?.h24 || 0));
+
+                renderCards(bestPairs);
+
+            } catch (error) {
+                console.error("Failed to fetch market data:", error);
+            }
+        }
+
+        function renderCards(pairs) {
+            container.innerHTML = ''; // Clear current content (simple re-render for now)
+
+            pairs.forEach((pair, index) => {
+                const isPositive = pair.priceChange?.h24 >= 0;
+                const changeColor = isPositive ? 'text-accent-green' : 'text-accent-red';
+                const changeIcon = isPositive ? 'fa-arrow-up' : 'fa-arrow-down';
+                const progressColor = isPositive ? 'bg-accent-green' : 'bg-accent-red';
+
+                // Volume & Txns
+                const vol24h = pair.volume?.h24 || 0;
+                const liquidityAmt = pair.liquidity?.usd || 0;
+                const fdv = pair.fdv || 0;
+
+                // Buy/Sell Ratio (approx from txns)
+                const txns = pair.txns?.h24 || { buys: 0, sells: 0 };
+                const totalTxns = (txns.buys || 0) + (txns.sells || 0);
+                const buyPercent = totalTxns > 0 ? ((txns.buys / totalTxns) * 100).toFixed(0) : 50;
+
+                const card = document.createElement('div');
+                card.className = `glass-panel rounded-2xl p-6 hover:border-primary-purple transition-all duration-300 transform hover:-translate-y-2 card-enter`;
+                card.style.animationDelay = `${index * 100}ms`;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center overflow-hidden border border-gray-600">
+                                ${pair.info?.imageUrl
+                        ? `<img src="${pair.info.imageUrl}" alt="${pair.baseToken.symbol}" class="w-full h-full object-cover">`
+                        : `<span class="text-xl font-bold">${pair.baseToken.symbol.substring(0, 2)}</span>`
+                    }
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl leading-tight">${pair.baseToken.name}</h3>
+                                <div class="flex items-center gap-2 text-sm text-gray-400">
+                                    <span class="font-mono">${pair.baseToken.symbol}</span>
+                                    <span class="px-2 py-0.5 rounded textxs bg-gray-800 uppercase border border-gray-700">
+                                        ${pair.chainId === 'solana' ? 'SOL' : 'ETH'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold font-mono tracking-tight">${formatCurrency(pair.priceUsd)}</div>
+                            <div class="font-medium ${changeColor} flex items-center justify-end gap-1">
+                                <i class="fas ${changeIcon} text-xs"></i>
+                                ${Math.abs(pair.priceChange?.h24).toFixed(2)}%
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-3 gap-4 mb-6 text-center bg-gray-900/50 rounded-lg p-3 border border-gray-800">
+                        <div>
+                            <div class="text-xs text-gray-500 uppercase mb-1">Market Cap</div>
+                            <div class="font-semibold text-sm">${formatNumber(fdv)}</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500 uppercase mb-1">Volume (24h)</div>
+                            <div class="font-semibold text-sm">${formatNumber(vol24h)}</div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500 uppercase mb-1">Liquidity</div>
+                            <div class="font-semibold text-sm">${formatNumber(liquidityAmt)}</div>
+                        </div>
+                    </div>
+
+                    <!-- Buy/Sell Pressure -->
+                    <div class="mb-2">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Buys: ${txns.buys}</span>
+                            <span>Sells: ${txns.sells}</span>
+                        </div>
+                        <div class="h-2 bg-gray-800 rounded-full overflow-hidden flex">
+                            <div style="width: ${buyPercent}%" class="h-full bg-accent-green"></div>
+                            <div style="width: ${100 - buyPercent}%" class="h-full bg-accent-red"></div>
+                        </div>
+                    </div>
+                    
+                    <a href="${pair.url}" target="_blank" class="block w-full text-center py-3 rounded-xl bg-primary-purple/20 hover:bg-primary-purple/40 text-primary-purple font-semibold transition-colors mt-4 border border-transparent hover:border-primary-purple">
+                        View on DexScreener <i class="fas fa-external-link-alt ml-1 text-sm"></i>
+                    </a>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Initial Fetch
+        fetchMarketData();
+
+        // Auto Refresh
+        setInterval(fetchMarketData, CONFIG.refreshInterval);
+
+    </script>
+</body>
+
+</html>
