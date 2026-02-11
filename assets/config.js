@@ -10,12 +10,12 @@ const API_CONFIG = {
   POKEMON_TCG_API_KEY: 'your_pokemon_tcg_api_key_here',
 
   // PSA API
-  PSA_ACCESS_TOKEN: 'C2MNdaW2IO9Xlbm1MXC0Q_ARCaVfQbkldZRsMYd6oWP8ZACXog6jzv6X7QrgyWwYRgNmU3fn5tKp99zf8lRHiugZiEsjnOl4t_EpApf7JixN7HXvzwkGUZ8jxfpYNqszBBUZsOHS0mRatl3h-KxNvyd0qHV-QuDyryiiEFMq50tdWIiqrLEdil0xGi478LrtrLfnB9kP10jBpk6_dWV_UjI6jRF9_gRwQy3meG9Bitgvpghg-1DImavKxNW_i6ojZYrCIY5DK3w3uMkniqr8DNunZxZu-2c25o7dymeXq8DqU_Wh',
+  PSA_ACCESS_TOKEN: 'your_access_token_here',
   PSA_API_URL: 'https://api.psacard.com/publicapi',
 
   // PriceCharting API
-  PRICE_CHARTING_API_TOKEN: 'e8b39b271ff62d9572736d3a6e8e8050edb53704',
-  PRICE_CHARTING_CSV_URL: 'https://www.pricecharting.com/price-guide/download-custom?t=e8b39b271ff62d9572736d3a6e8e8050edb53704&category=pokemon-cards',
+  PRICE_CHARTING_API_TOKEN: 'your_access_token_here',
+  PRICE_CHARTING_CSV_URL: 'https://www.pricecharting.com/price-guide/download-custom?t=your_access_token_here&category=pokemon-cards',
   PRICE_CHARTING_API_BASE: 'https://www.pricecharting.com/api',
 
   // Currency APIs
