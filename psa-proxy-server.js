@@ -15,7 +15,7 @@ app.use(express.static('.'));
 
 // PSA API Configuration
 const PSA_API_URL = 'https://api.psacard.com/publicapi';
-const PSA_TOKEN = 'C2MNdaW2IO9Xlbm1MXC0Q_ARCaVfQbkldZRsMYd6oWP8ZACXog6jzv6X7QrgyWwYRgNmU3fn5tKp99zf8lRHiugZiEsjnOl4t_EpApf7JixN7HXvzwkGUZ8jxfpYNqszBBUZsOHS0mRatl3h-KxNvyd0qHV-QuDyryiiEFMq50tdWIiqrLEdil0xGi478LrtrLfnB9kP10jBpk6_dWV_UjI6jRF9_gRwQy3meG9Bitgvpghg-1DImavKxNW_i6ojZYrCIY5DK3w3uMkniqr8DNunZxZu-2c25o7dymeXq8DqU_Wh';
+const PSA_TOKEN = 'your_access_token_here';
 
 // Proxy endpoint for PSA cert lookup
 app.get('/api/psa/cert/:certNumber', async (req, res) => {
@@ -74,7 +74,7 @@ app.get('/api/psa/cert/:certNumber', async (req, res) => {
 
 // PriceCharting CSV proxy endpoint
 app.get('/api/pricecharting/csv', async (req, res) => {
-    const csvUrl = 'https://www.pricecharting.com/price-guide/download-custom?t=e8b39b271ff62d9572736d3a6e8e8050edb53704&category=pokemon-cards';
+    const csvUrl = 'https://www.pricecharting.com/price-guide/download-custom?t=your_access_token_here&category=pokemon-cards';
 
     console.log(`\n========================================`);
     console.log(`[CSV Proxy] Fetching PriceCharting CSV`);
